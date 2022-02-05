@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TodoListApp V2</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <nav>
+        <h1>ToDoList App v2</h1>
+        <ul>
+            <li>Home</li>
+            <li>About</li>
+            <li>Contact</li>
+        </ul>
+    </nav>
+    <div class="container">
+        <form class="list-form" action="/" method="post">
+            <label for="todo">Add a List</label>
+            <input type="text" name="todo" placeholder="Enter list name" autocomplete="off">
+            <input type="submit" value="Add to List">
+        </form>
+        <!-- FOR LOOP FOR TASK GOES HERE -->
+        <% task.forEach(e=>{ %>
+            <div id="<%=e._id%>" class="task-container">
+                <form class="delete-list" action="/delete<%= e._id %>" method="post">
+                    <button class="delete-list-id" type="submit">Delete List</button>
+                </form>
+                <h2>
+                    <%= e.task_name %>
+                </h2>
+                <form class="add-task-form" action="/<%= e._id %>" method="post">
+                    <input type="text" name="task" id="task" placeholder="Enter task for this list" autocomplete="off">
+                    <a href="#<%=e._id%>"><button type="submit">+</button></a>
+                </form>
+                <ul>
+                    <!-- FOR LOOP FOR TASKS ARRAY GOES HERE -->
+                    <% e.tasks.forEach((el,index)=>{ %>
+                        <form action="/task<%= index+'_'+e._id %>" method="post">
+                            <li class="list-container">
+                                <p><%= el %></p>
+                                    <button class="delete-list" type="submit">X</button>
+                            </li>
+                        </form>
+                        <% }); %>
+
+                </ul>
+            </div>
+            <% }); %>
+    </div>
+</body>
+
+</html>
